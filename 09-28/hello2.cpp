@@ -3,10 +3,12 @@
 #include <thread>
 using namespace std;
 
+// you are not required to understand how to implement the following function
 void sleep(double seconds) {
     std::this_thread::sleep_for(std::chrono::microseconds(static_cast<int>(1e6 * seconds)));
 }
 
+// but you should understand everything that's happening inside the main function!
 int main()
 {
     cout << "Hello, world!" << endl;

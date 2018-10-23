@@ -1,0 +1,133 @@
+"g++ -c print_comma.cpp" makes an object file, which contains the machine code representation of everything defined in print_comma.cpp.
+
+To link a bunch of object files, you use "g++ a.o b.o c.o -o output_name".
+
+I ran "g++ *.o -o main" to link everything.
+
+
+lawtonnichols:make-example/ (master*) $ g++ main.cpp                 [14:03:44]
+Undefined symbols for architecture x86_64:
+  "print_hello_world()", referenced from:
+      _main in main-2e4792.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+lawtonnichols:make-example/ (master*) $ g++ main.cpp print_hello_world.cpp
+Undefined symbols for architecture x86_64:
+  "print_comma()", referenced from:
+      print_hello_world() in print_hello_world-36bc4d.o
+  "print_hello()", referenced from:
+      print_hello_world() in print_hello_world-36bc4d.o
+  "print_world()", referenced from:
+      print_hello_world() in print_hello_world-36bc4d.o
+  "print_exclamation_point()", referenced from:
+      print_hello_world() in print_hello_world-36bc4d.o
+ld: symbol(s) not found for architecture x86_64
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+lawtonnichols:make-example/ (master*) $ g++ main.cpp print_hello_world.cpp print_hello.cpp print_exclamation_point.cpp print_comma.cpp print_world.cpp
+lawtonnichols:make-example/ (master*) $ ls                           [14:05:07]
+Makefile                    print_hello.cpp
+a.out                       print_hello.h
+main.cpp                    print_hello_world.cpp
+print_comma.cpp             print_hello_world.h
+print_comma.h               print_world.cpp
+print_exclamation_point.cpp print_world.h
+print_exclamation_point.h
+lawtonnichols:make-example/ (master*) $ rm a.out                     [14:05:27]
+lawtonnichols:make-example/ (master*) $ g++ -c print_comma.cpp       [14:13:12]
+lawtonnichols:make-example/ (master*) $ ls                           [14:13:46]
+Makefile                    print_hello.cpp
+main.cpp                    print_hello.h
+print_comma.cpp             print_hello_world.cpp
+print_comma.h               print_hello_world.h
+print_comma.o               print_world.cpp
+print_exclamation_point.cpp print_world.h
+print_exclamation_point.h
+lawtonnichols:make-example/ (master*) $ g++ -c print_exclamation_point.cpp
+lawtonnichols:make-example/ (master*) $ g++ -c print_hello.cpp       [14:15:42]
+lawtonnichols:make-example/ (master*) $ g++ -c print_hello_world.cpp [14:15:49]
+print_hello_world.cpp:10:5: error: use of undeclared identifier
+      'print_exclamation_point'
+    print_exclamation_point();
+    ^
+1 error generated.
+lawtonnichols:make-example/ (master*) $ g++ -c print_hello_world.cpp [14:15:54]
+lawtonnichols:make-example/ (master*) $ g++ -c print_world.cpp       [14:16:31]
+lawtonnichols:make-example/ (master*) $ g++ -c main.cpp              [14:16:37]
+lawtonnichols:make-example/ (master*) $ ls                           [14:16:41]
+Makefile                    print_hello.cpp
+main.cpp                    print_hello.h
+main.o                      print_hello.o
+object_files.txt            print_hello_world.cpp
+print_comma.cpp             print_hello_world.h
+print_comma.h               print_hello_world.o
+print_comma.o               print_world.cpp
+print_exclamation_point.cpp print_world.h
+print_exclamation_point.h   print_world.o
+print_exclamation_point.o
+lawtonnichols:make-example/ (master*) $ g++ *.o -o main              [14:16:41]
+lawtonnichols:make-example/ (master*) $ ls                           [14:18:05]
+Makefile                    print_exclamation_point.o
+main                        print_hello.cpp
+main.cpp                    print_hello.h
+main.o                      print_hello.o
+object_files.txt            print_hello_world.cpp
+print_comma.cpp             print_hello_world.h
+print_comma.h               print_hello_world.o
+print_comma.o               print_world.cpp
+print_exclamation_point.cpp print_world.h
+print_exclamation_point.h   print_world.o
+lawtonnichols:make-example/ (master*) $ ./main                       [14:18:39]
+Hello, world!
+Hello, world!
+lawtonnichols:make-example/ (master*) $ make clean                   [14:18:45]
+rm *.o main
+lawtonnichols:make-example/ (master*) $ make main                    [14:26:43]
+# this is our custom .o rule!
+g++ -Wall -c main.cpp -o main.o
+# this is our custom .o rule!
+g++ -Wall -c print_hello_world.cpp -o print_hello_world.o
+# this is our custom .o rule!
+g++ -Wall -c print_hello.cpp -o print_hello.o
+# this is our custom .o rule!
+g++ -Wall -c print_comma.cpp -o print_comma.o
+# this is our custom .o rule!
+g++ -Wall -c print_world.cpp -o print_world.o
+# this is our custom .o rule!
+g++ -Wall -c print_exclamation_point.cpp -o print_exclamation_point.o
+# g++ -Wall main.o print_hello_world.o print_hello.o print_comma.o print_world.o print_exclamation_point.o -o main
+# the next line is shorthand for the previous line
+# g++ -Wall main.o print_hello_world.o print_hello.o print_comma.o print_world.o print_exclamation_point.o -o main
+# the next line is shorthand for the previous line
+g++ -Wall main.o print_hello_world.o print_hello.o print_comma.o print_world.o print_exclamation_point.o -o main
+lawtonnichols:make-example/ (master*) $ make main                    [14:27:01]
+make: `main' is up to date.
+lawtonnichols:make-example/ (master*) $ make                         [14:27:30]
+# this is our custom .o rule!
+g++ -Wall -c main.cpp -o main.o
+# g++ -Wall main.o print_hello_world.o print_hello.o print_comma.o print_world.o print_exclamation_point.o -o main
+# the next line is shorthand for the previous line
+# g++ -Wall main.o print_hello_world.o print_hello.o print_comma.o print_world.o print_exclamation_point.o -o main
+# the next line is shorthand for the previous line
+g++ -Wall main.o print_hello_world.o print_hello.o print_comma.o print_world.o print_exclamation_point.o -o main
+lawtonnichols:make-example/ (master*) $ ls                           [14:27:45]
+Makefile                    print_exclamation_point.o
+main                        print_hello.cpp
+main.cpp                    print_hello.h
+main.o                      print_hello.o
+object_files.txt            print_hello_world.cpp
+print_comma.cpp             print_hello_world.h
+print_comma.h               print_hello_world.o
+print_comma.o               print_world.cpp
+print_exclamation_point.cpp print_world.h
+print_exclamation_point.h   print_world.o
+lawtonnichols:make-example/ (master*) $ make clean                   [14:28:22]
+rm *.o main
+lawtonnichols:make-example/ (master*) $ ls                           [14:28:29]
+Makefile                    print_hello.cpp
+main.cpp                    print_hello.h
+object_files.txt            print_hello_world.cpp
+print_comma.cpp             print_hello_world.h
+print_comma.h               print_world.cpp
+print_exclamation_point.cpp print_world.h
+print_exclamation_point.h
+lawtonnichols:make-example/ (master*) $                              [14:28:30]

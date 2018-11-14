@@ -86,6 +86,9 @@ int main(int argc, char const *argv[])
     ifstream ifs;
     ifs.open(argv[1]);
 
+    // draw the first star
+    draw_star(p);
+    wait(1.0);
 
     // go line by line
     string line;

@@ -1,3 +1,5 @@
+// example usage: ./etch-a-sketch directions.txt 1 1
+
 #include <iostream>
 #include <sys/ioctl.h>
 #include <unistd.h>

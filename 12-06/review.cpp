@@ -18,7 +18,7 @@ void if_else() {
 // Data types and declarations
 
 void data_types_and_decls() {
-    int x;
+    int x; // this is a declaration of an int x
     bool b;
     char c;
     int *y = &x;
@@ -26,7 +26,20 @@ void data_types_and_decls() {
     // type_name var_name (optional = value)
 
     // you can convert from int to bool
-    bool b2 = 0; bool b3 = 55234232;
+    // all nonzero numbers are true
+    bool b2 = 0; bool b3 = 55234232; 
+
+    int n = static_cast<int>(6.3);
+
+    bool b4 = -55234232;
+
+    cout << b4 << endl;
+    cout << static_cast<int>(b4) << endl;
+
+    bool b5 = 0.00;
+
+    cout << b5 << endl;
+    cout << static_cast<double>(b5) << endl;
 }
 
 // While loops
@@ -34,9 +47,18 @@ void data_types_and_decls() {
 void while_loops() {
     int x = 0;
 
+    // while:
+    // check condition first, execute the body if true, then
+    // check the condition again, …
+
     while (x < 0) {
         cout << "This never happens" << endl;
     }
+
+    // do-while:
+    // execute the body,
+    // check the condition, execute the body if true,
+    // check the condition again, …
 
     do {
         cout << "But this does" << endl;
@@ -46,6 +68,13 @@ void while_loops() {
 // For loops
 
 void for_loops() {
+
+    // initialization
+    // loop:
+    // check condition
+    // execute body if true; otherwise end the loop
+    // execute increment statement
+    // goto loop
     for (int i = 10; i >= 1; i++) {
         cout << i << endl;
     }
@@ -64,8 +93,22 @@ void exprs() {
     int x = 5, y = 7;
     bool b1 = true, b2 = false;
 
+    // x++ sets x to 6, and "returns" 5
+    // ++y sets y to 8, and "returns" 8
+
     // how do you write the parentheses in the next line?
     cout << ( x + 1 < 5 && y == 9 || b1 && b2 ) << endl;
+}
+
+void exprs2() {
+    int x = 5;
+
+    int y = x++; // change x to 6, and set y to the old value
+
+    cout << y << endl;
+
+    cout << x++ << endl;
+    cout << ++x << endl;
 }
 
 // Data representation
@@ -87,6 +130,8 @@ see book for more details
 
 void arrays() {
     int arr[] = {1, 2, 3}; // can initialize with data immediately
+
+    // arr by itself is a pointer to the first element
 
     int arr2[3]; // or wait to do so
     arr2[0] = 4; 
@@ -144,6 +189,10 @@ void pointers() {
 
     *p = 5; // x is now 5 because x and *p are linked together
     cout << x << endl;
+
+    int *y = new int(55);
+
+    cout << *y << endl;
 }
 
 // Structs
@@ -154,6 +203,8 @@ Structs help you keep track of a group of related variables
 
 */
 
+
+// laid out in memory in the order declared
 struct Point {
     int x;
     int y;
@@ -197,6 +248,7 @@ void printArrayTest() {
 
 // const because we're not updating p
 void printPoint(const Point &p) {
+    // we can use the . with references
     cout << "(" << p.x << ", " << p.y << ")";
 }
 
@@ -219,6 +271,9 @@ void dynamic_memory_allocation() {
 
     // memory allocated using new is freed using delete
     delete y;
+
+    int *arr = new int[10];
+    delete[] arr;
 }
 
 // Linked-lists
@@ -232,7 +287,7 @@ struct LinkedList {
     Node *tail;
 };
 
-// make the list 1->2->3
+// make the list 1->2->3->X
 LinkedList* one_two_three() {
     LinkedList *l = new LinkedList;
 
@@ -266,10 +321,12 @@ void c_strings() {
     cout << "strcmp(s2, s1): " << strcmp(s2, s1) << endl;
     cout << "strcmp(s1, s1): " << strcmp(s1, s1) << endl;
 
+    // this is like s1 = s1+s2
     strcat(s1, s2);
 
     cout << "s1: " << s1 << endl;
 
+    // this is like s1 = s2
     strcpy(s1, s2);
 
     cout << "s1: " << s1 << endl;   
